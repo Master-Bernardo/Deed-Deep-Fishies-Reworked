@@ -100,5 +100,12 @@ public class EC_Movement : GameEntityComponent
         myDirection = myTransform.up;
         desiredDirection = destination - myPosition;
     }
+
+    public void MoveToDirection(Vector2 direction)
+    {
+        moveTo = true;
+        myDirection = myTransform.up;
+        desiredDirection = direction;
+    }
 }
 

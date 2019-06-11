@@ -16,6 +16,7 @@ public class GameEntity : MonoBehaviour
     public EC_Movement movement;
     public EC_Health health;
     public PlayerController playerController;
+    public EC_FishieAI fishieAI;
     [HideInInspector]
     public Transform myTransform;
     [HideInInspector]
@@ -34,11 +35,11 @@ public class GameEntity : MonoBehaviour
         myTransform = transform;
 
         //setup all attached components
-        components = new GameEntityComponent[] {sensing, movement, health, playerController }; 
+        components = new GameEntityComponent[] {sensing, movement, health, playerController, fishieAI}; 
 
         for (int i = 0; i < components.Length; i++)
         {
-           components[i].SetUpEntityComponent(this);
+           if(components[i].enabled) components[i].SetUpEntityComponent(this);
         }
     }
 
@@ -46,7 +47,7 @@ public class GameEntity : MonoBehaviour
     {
         for (int i = 0; i < components.Length; i++)
         {
-            components[i].FixedUpdateEntityComponent(deltaTime, time);
+            if(components[i].enabled) components[i].FixedUpdateEntityComponent(deltaTime, time);
         }
     }
 
@@ -54,7 +55,7 @@ public class GameEntity : MonoBehaviour
     {
         for (int i = 0; i < components.Length; i++)
         {
-           components[i].UpdateEntityComponent(deltaTime, time);
+            if (components[i].enabled) components[i].UpdateEntityComponent(deltaTime, time);
         }
     }
 
