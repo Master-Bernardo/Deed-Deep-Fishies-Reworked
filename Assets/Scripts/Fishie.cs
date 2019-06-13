@@ -23,6 +23,8 @@ public class Fishie : GameEntity
         movement = GetComponent<EC_Movement>();
         playerController = GetComponent<EC_PlayerController>();
         fishieAI = GetComponent<EC_FishieAI>();
+        ressources = GetComponent<EC_Ressources>();
+        actions = GetComponent<EC_Actions>();
 
         //setup all attached components
         if(playerController!=null) components = new GameEntityComponent[] { sensing, movement, actions, ressources, playerController };
