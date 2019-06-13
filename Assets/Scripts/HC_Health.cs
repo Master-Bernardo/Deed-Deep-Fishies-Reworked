@@ -9,7 +9,7 @@ using UnityEngine.Events;
  */
 
 [System.Serializable]
-public class EC_Health : GameEntityComponent
+public class HC_Health : MonoBehaviour
 {
     public bool alive = true;
     public int maxHealth;
@@ -28,22 +28,18 @@ public class EC_Health : GameEntityComponent
     [Tooltip("for now used to change color on all the lods")]
     public SpriteRenderer[] renders;
 
-    public override void SetUpEntityComponent(GameEntity entity)
+    void Start()
     {
-        base.SetUpEntityComponent(entity);
-
         currentHealth = maxHealth;
-        myTransform = entity.myTransform;
-
-        normalColor = myTransform.GetChild(0).GetComponent<SpriteRenderer>().color;
+        normalColor = renders[0].GetComponent<SpriteRenderer>().color;
         damagColor = new Color(1 - normalColor.r, 1 - normalColor.g, 1 - normalColor.b);
     }
 
-    public override void UpdateEntityComponent(float deltaTime, float time)
+    void Update()
     {
         if (getBackToNormalColor)
         {
-            if (time >= timeToGetBackToNormalColor)
+            if (Time.time >= timeToGetBackToNormalColor)
             {
                 getBackToNormalColor = false;
                 GetBackToNormalColor();
@@ -81,7 +77,7 @@ public class EC_Health : GameEntityComponent
     {
         alive = false;
         OnDie.Invoke();
-        entity.markAsDestroyed = true;
+        //entity.markAsDestroyed = true;
     }
 
     void GetBackToNormalColor()

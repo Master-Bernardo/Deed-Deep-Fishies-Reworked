@@ -10,13 +10,8 @@ public class GameEntity : MonoBehaviour
 {
     public int teamID;
 
-    GameEntityComponent[] components;
+    protected GameEntityComponent[] components;
 
-    public EC_Sensing sensing;
-    public EC_Movement movement;
-    public EC_Health health;
-    public PlayerController playerController;
-    public EC_FishieAI fishieAI;
     [HideInInspector]
     public Transform myTransform;
     [HideInInspector]
@@ -26,16 +21,11 @@ public class GameEntity : MonoBehaviour
 
 
 
-    void Start()
+    protected virtual void Start()
     {
         GameEntityManager.Instance.AddGameEntity(this);
 
-        //set the variables
-
         myTransform = transform;
-
-        //setup all attached components
-        components = new GameEntityComponent[] {sensing, movement, health, playerController, fishieAI}; 
 
         for (int i = 0; i < components.Length; i++)
         {
@@ -57,6 +47,11 @@ public class GameEntity : MonoBehaviour
         {
             if (components[i].enabled) components[i].UpdateEntityComponent(deltaTime, time);
         }
+    }
+
+    public void Destroy()
+    {
+        markAsDestroyed = true;
     }
 
     

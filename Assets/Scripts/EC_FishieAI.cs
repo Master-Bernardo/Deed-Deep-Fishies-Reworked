@@ -13,8 +13,8 @@ public class EC_FishieAI : GameEntityComponent
     {
         base.SetUpEntityComponent(entity);
         myTransform = entity.transform;
-        sensing = entity.sensing;
-        movement = entity.movement;
+        sensing = (entity as Fishie).sensing;
+        movement = (entity as Fishie).movement;
     }
 
     public override void UpdateEntityComponent(float deltaTime, float time)
@@ -24,16 +24,19 @@ public class EC_FishieAI : GameEntityComponent
 
         foreach (GameEntity thisEntity in sensing.visibleEntities)
         {
-            if(thisEntity.teamID != entity.teamID)
+            if (thisEntity != null)
             {
-                float currentDistance = (thisEntity.myTransform.position - myTransform.position).sqrMagnitude;
-
-                if (currentDistance < nearestDistance)
+                if (thisEntity.teamID != entity.teamID)
                 {
-                    nearestDistance = currentDistance;
-                    nearestTarget = thisEntity;
+                    float currentDistance = (thisEntity.myTransform.position - myTransform.position).sqrMagnitude;
+
+                    if (currentDistance < nearestDistance)
+                    {
+                        nearestDistance = currentDistance;
+                        nearestTarget = thisEntity;
+                    }
                 }
-            }     
+            }   
         }
 
         if (nearestTarget != null)

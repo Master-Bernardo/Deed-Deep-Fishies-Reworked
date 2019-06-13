@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerController : GameEntityComponent {
+public class EC_PlayerController : GameEntityComponent {
 
     public Camera mainCam;
     EC_Movement movement;
@@ -14,11 +14,12 @@ public class PlayerController : GameEntityComponent {
     public override void SetUpEntityComponent(GameEntity entity)
     {
         base.SetUpEntityComponent(entity);
-        movement = entity.movement;
+        movement = (entity as Fishie).movement;
     }
 
     public override void UpdateEntityComponent(float deltaTime, float time)
     {
+        
         //lmb
         if (Input.GetMouseButton(0))
         {

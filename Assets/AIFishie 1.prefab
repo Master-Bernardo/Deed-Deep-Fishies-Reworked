@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3641940067446313925}
   - component: {fileID: 3641940067446313924}
   - component: {fileID: 3641940067446313927}
-  - component: {fileID: 3641940067446313926}
+  - component: {fileID: 5220370748129785089}
   m_Layer: 10
   m_Name: AIFishie 1
   m_TagString: Untagged
@@ -50,7 +50,7 @@ Rigidbody2D:
   m_LinearDrag: 2
   m_AngularDrag: 3
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b4b4e54f101eccf4eadbeb66eba43168, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -71,7 +71,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &3641940067446313926
+--- !u!114 &5220370748129785089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,14 +80,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3641940067446313929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5af16f6d5d086874693c9a49fff319be, type: 3}
+  m_Script: {fileID: 11500000, guid: 9abdd3c4814e58c4e98ba85f6d0f9246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   teamID: 1
+  myTransform: {fileID: 0}
+  markAsDestroyed: 0
   sensing:
     enabled: 1
     scanWorldInterval: 0.5
-    scanWorldRadius: 10
+    scanWorldRadius: 15
     showScanWorldRadius: 0
     entitiesLayer: 10
   movement:
@@ -96,7 +98,7 @@ MonoBehaviour:
     maxMovementSpeed: 5
     rotationAcceleration: 1
     maxRotationSpeed: 5
-    rb: {fileID: 3641940067446313924}
+    rb: {fileID: 0}
   health:
     enabled: 1
     alive: 1
@@ -113,15 +115,9 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
     renders:
-    - {fileID: 3641940067753188503}
-    - {fileID: 3641940067736201519}
-  playerController:
-    enabled: 0
-    mainCam: {fileID: 0}
-  fishieAI:
-    enabled: 1
-  myTransform: {fileID: 0}
-  markAsDestroyed: 0
+    - {fileID: 0}
+    - {fileID: 0}
+  mainBody: {fileID: 0}
 --- !u!1 &3641940067736201518
 GameObject:
   m_ObjectHideFlags: 0

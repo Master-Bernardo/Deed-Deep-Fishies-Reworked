@@ -7,7 +7,7 @@ using UnityEngine;
  */
 
 
-public class GameEntityComponent
+public class GameEntityComponent: MonoBehaviour
 {
     protected GameEntity entity; //every component has a reference to the entity using it - but does not have to use it by himself
     public bool enabled = true;
