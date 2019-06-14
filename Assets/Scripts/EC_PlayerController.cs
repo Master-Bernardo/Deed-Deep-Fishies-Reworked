@@ -6,7 +6,7 @@ using UnityEngine;
 public class EC_PlayerController : GameEntityComponent {
 
     public Camera mainCam;
-    EC_Movement movement;
+    EC_Actions actions;
 
     //for movement
     Vector2 clickedPoint;
@@ -14,7 +14,7 @@ public class EC_PlayerController : GameEntityComponent {
     public override void SetUpEntityComponent(GameEntity entity)
     {
         base.SetUpEntityComponent(entity);
-        movement = (entity as Fishie).movement;
+        actions = (entity as Fishie).actions;
     }
 
     public override void UpdateEntityComponent(float deltaTime, float time)
@@ -25,7 +25,7 @@ public class EC_PlayerController : GameEntityComponent {
         {
             //simple movement code
             clickedPoint = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            movement.MoveToDestination(clickedPoint);
+            actions.MoveToDestination(clickedPoint);
         } 
     }
 }

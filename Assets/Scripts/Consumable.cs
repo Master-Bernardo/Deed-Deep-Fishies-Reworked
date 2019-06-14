@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ConsumableType
+public enum RessourceType
 {
     AquaVita,
     Treden //etc
@@ -10,8 +10,13 @@ public enum ConsumableType
 
 
 //somethin we can consume - a part of a plant or meat or some other ressource
-public class Consumable : MonoBehaviour
+public class Consumable : MonoBehaviour, IDamageable<int>
 {
-    public ConsumableType type;
-    public int amount;
+    public RessourceAmountPair ressource;
+
+    public void TakeDamage(int damage)
+    {
+        ressource.amount -= damage;
+        if (ressource.amount <= 0) Destroy(gameObject);
+    }
 }

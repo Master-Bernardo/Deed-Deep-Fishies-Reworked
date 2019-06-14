@@ -23,6 +23,19 @@ public class BodyPartMouth : BodyPart
     {
         if (Time.time > nextBiteStartTime)
         {
+            /*bool bite = false;
+
+            BodyPart potentialBodyPart = collision.gameObject.GetComponent<BodyPart>();
+            if (potentialBodyPart != null)
+            {
+                if (potentialBodyPart.entity != entity)
+                {
+                    bite = true;
+                }
+            }else
+            {
+                Consumable potentialConsumable = collision.gameOvjec
+            }*/
             nextBiteStartTime = Time.time + biteInterval;
             nextBiteEndTime = Time.time + biteTime;
 
@@ -41,33 +54,39 @@ public class BodyPartMouth : BodyPart
    
             //TODO sometimes it does not detect the enemy why?
             Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, biteRadius);
+            BodyPart potentialBodyPart;
+            Consumable potentialConsumable;
 
-            GameEntity potentialGameEntity;
-            GameEntity targetGameEntity = null;
-
-            /*for (int i = 0; i < collisions.Length; i++)
+            for (int i = 0; i < collisions.Length; i++)
             {
-                potentialGameEntity = collisions[i].gameObject.GetComponent<GameEntity>();
+                potentialBodyPart = collisions[i].gameObject.GetComponent<BodyPart>();
 
-                if (potentialGameEntity != null)
+                if (potentialBodyPart != null)
                 {
-                    if (potentialGameEntity != entity)
+                    if(potentialBodyPart.entity != entity)
                     {
-                        targetGameEntity = potentialGameEntity;
+                        if (potentialBodyPart is IDamageable<int>)
+                        {
+                            (potentialBodyPart as IDamageable<int>).TakeDamage(damage);
+                            return;
+                        }
+                    }
+                    
+                }else
+                {
+                    potentialConsumable = collisions[i].gameObject.GetComponent<Consumable>();
+
+                    if (potentialConsumable!= null)
+                    {
+                        (potentialConsumable as IDamageable<int>).TakeDamage(damage);
+                        (entity as Fishie).actions.Consume(potentialConsumable);
                     }
                 }
+
+                
+
+                
             }
-
-            if (targetGameEntity != null)
-            {
-                (targetGameEntity as Fishie).health.TakeDamage(damage);
-                targetGameEntity.gameObject.GetComponent<Rigidbody2D>().AddForce((targetGameEntity.myTransform.position - entity.myTransform.position).normalized * 300);
-            }*/
-
-            /*else if (targetBodyPart != null)
-            {
-                if (targetBodyPart.hasHealth) targetBodyPart.health.TakeDamage(damage);
-            }*/
         }
     }
 }
