@@ -49,7 +49,7 @@ public class GameEntity : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public virtual void Destroy()
     {
         markAsDestroyed = true;
     }

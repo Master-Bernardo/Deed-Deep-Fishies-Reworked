@@ -17,12 +17,19 @@ public class EC_Sensing : GameEntityComponent
     public float scanWorldInterval;
     public float scanWorldRadius;
 
-
+    //TODO collections for enemies and friendlies - to the enemy ai does not have t check this every frame
     public HashSet<GameEntity> visibleEntities = new HashSet<GameEntity>();
+    public HashSet<GameEntity> friendlyFishies = new HashSet<GameEntity>();
+    public HashSet<GameEntity> enemyFishies = new HashSet<GameEntity>();
 
+    public HashSet<Consumable> visibleConsumables = new HashSet<Consumable>();
+    public HashSet<Consumable> visibleEatableConsumables = new HashSet<Consumable>();
+
+    public ConsumableType eatableConsumable;
 
     public bool showScanWorldRadius = false;
     public int entitiesLayer;
+    public int consumablesLayer;
 
     Transform myTransform;
 
@@ -44,12 +51,15 @@ public class EC_Sensing : GameEntityComponent
             nextScanWorldTime += scanWorldInterval;
 
             ScanSurroundingUnits();
+            ScanSurroundingConsumables();
         }
     }
 
     void ScanSurroundingUnits()
     {
         visibleEntities.Clear();
+        friendlyFishies.Clear();
+        enemyFishies.Clear();
 
         int layerMask = 1 << entitiesLayer;
 
@@ -57,7 +67,36 @@ public class EC_Sensing : GameEntityComponent
 
         for (int i = 0; i < visibleColliders.Length; i++)
         {
-            visibleEntities.Add(visibleColliders[i].GetComponent<GameEntity>());
+            GameEntity thisEntity = visibleColliders[i].GetComponent<GameEntity>();
+            visibleEntities.Add(thisEntity);
+            if(thisEntity.teamID != entity.teamID)
+            {
+                enemyFishies.Add(thisEntity);
+            }
+            else
+            {
+                friendlyFishies.Add(thisEntity);
+            }
+        }
+    }
+
+    void ScanSurroundingConsumables()
+    {
+        visibleConsumables.Clear();
+        visibleEatableConsumables.Clear();
+
+        int layerMask = 1 << consumablesLayer;
+
+        Collider2D[] visibleColliders = Physics2D.OverlapCircleAll(myTransform.position, scanWorldRadius, layerMask);
+
+        for (int i = 0; i < visibleColliders.Length; i++)
+        {
+            Consumable thisConsumable = visibleColliders[i].GetComponent<Consumable>();
+            visibleConsumables.Add(thisConsumable);
+            if(thisConsumable.type == eatableConsumable)
+            {
+                visibleEatableConsumables.Add(thisConsumable);
+            }
         }
     }
 

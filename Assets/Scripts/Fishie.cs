@@ -14,6 +14,9 @@ public class Fishie : GameEntity
     [Tooltip("the main body which holds everything together")]
     public BodyPart mainBody;
 
+    [Tooltip("this bodypart drops this when it gets destroyed")]
+    public GameObject drop;
+
     bool alive;
 
 

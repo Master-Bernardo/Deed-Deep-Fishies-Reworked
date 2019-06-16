@@ -26,21 +26,25 @@ public class EC_Ressources : GameEntityComponent
 {
     public RessourceSet[] ressources;
 
-    public void AddRessource(RessourceAmountPair ressource)
+    public void AddRessource(RessourceType type, float amount)
     {
         foreach (RessourceSet item in ressources)
         {
-            if (item.type == ressource.type) item.amount += ressource.amount;
+            if (item.type == type)
+            {
+                item.amount += amount;
+                if(item.amount>item.capacity) item.amount = item.capacity;
+            }
         }
     }
 
-    public void RemoveRessource(RessourceAmountPair ressource)
+    public void RemoveRessource(RessourceType type, float amount)
     {
         foreach (RessourceSet item in ressources)
         {
-            if (item.type == ressource.type)
+            if (item.type == type)
             {
-                item.amount -= ressource.amount;
+                item.amount -= amount;
                 if (item.amount <= 0)
                 {
                     if (item.vital) entity.Destroy();
@@ -49,11 +53,24 @@ public class EC_Ressources : GameEntityComponent
         }
     }
 
-    public bool IsThereEnoughOf(RessourceAmountPair ressource)
+    public float GetRessourceAmount(RessourceType type)
     {
         foreach (RessourceSet item in ressources)
         {
-            if (item.type == ressource.type) if (item.amount >= ressource.amount) return true;
+            if (item.type == type)
+            {
+                return item.amount;
+            }
+        }
+
+        return 0f;
+    }
+
+    public bool IsThereEnoughOf(RessourceType type, float amount)
+    {
+        foreach (RessourceSet item in ressources)
+        {
+            if (item.type == type) if (item.amount >= amount) return true;
         }
 
         return false;

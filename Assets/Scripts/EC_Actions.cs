@@ -14,6 +14,7 @@ public class EC_Actions : GameEntityComponent
     EC_Ressources ressources;
     EC_Movement movement;
 
+    [Tooltip("costPerSecond")]
     public RessourceAmountPair movementCost;
     public RessourceAmountPair passiveLivingCost;
 
@@ -28,31 +29,32 @@ public class EC_Actions : GameEntityComponent
     {
         base.UpdateEntityComponent(deltaTime, time);
 
-        ressources.RemoveRessource(passiveLivingCost);
+        ressources.RemoveRessource(passiveLivingCost.type, passiveLivingCost.amount*Time.deltaTime);
     }
+
 
     public void Consume(Consumable consumable)
     {
-        ressources.AddRessource(consumable.ressource);
+        ressources.AddRessource(consumable.ressource.type, consumable.ressource.amount);
     }
 
     public void MoveToDestination(Vector2 destination)
     {
         //check if we have the necessary ressources
-        if (ressources.IsThereEnoughOf(movementCost))
+        if (ressources.IsThereEnoughOf(movementCost.type,movementCost.amount))
         {
             movement.MoveToDestination(destination);
-            ressources.RemoveRessource(movementCost);
+            ressources.RemoveRessource(movementCost.type,movementCost.amount*Time.deltaTime);
         }
 
     }
 
     public void MoveToDirection(Vector2 direction)
     {
-        if (ressources.IsThereEnoughOf(movementCost))
+        if (ressources.IsThereEnoughOf(movementCost.type, movementCost.amount))
         {
             movement.MoveToDirection(direction);
-            ressources.RemoveRessource(movementCost);
+            ressources.RemoveRessource(movementCost.type, movementCost.amount * Time.deltaTime);
         }
     }
     

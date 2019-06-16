@@ -7,7 +7,7 @@ public class BodyPartMouth : BodyPart
     //the Trigger which this object cas triggers the bit, the actual damage radius of the bite is given by the radius value
 
     public int damage;
-
+    public ConsumableType typeOfEatibleFood;
     public float biteRadius;
 
     public float biteInterval;
@@ -23,23 +23,35 @@ public class BodyPartMouth : BodyPart
     {
         if (Time.time > nextBiteStartTime)
         {
-            /*bool bite = false;
+            bool bite = false;
 
             BodyPart potentialBodyPart = collision.gameObject.GetComponent<BodyPart>();
             if (potentialBodyPart != null)
             {
-                if (potentialBodyPart.entity != entity)
+                if (potentialBodyPart.entity.teamID != entity.teamID)
                 {
                     bite = true;
                 }
             }else
             {
-                Consumable potentialConsumable = collision.gameOvjec
-            }*/
-            nextBiteStartTime = Time.time + biteInterval;
-            nextBiteEndTime = Time.time + biteTime;
+                //check if we can eat this consumable
+                Consumable potentialConsumable = collision.gameObject.GetComponent<Consumable>();
+                if (potentialConsumable != null)
+                {
+                    if(potentialConsumable.type == typeOfEatibleFood)
+                    {
+                        bite = true;
+                    }
+                }
+            }
 
-            biteAnimator.SetTrigger("Bite");
+            if (bite)
+            {
+                nextBiteStartTime = Time.time + biteInterval;
+                nextBiteEndTime = Time.time + biteTime;
+
+                biteAnimator.SetTrigger("Bite");
+            }   
             
         }
        
@@ -63,7 +75,7 @@ public class BodyPartMouth : BodyPart
 
                 if (potentialBodyPart != null)
                 {
-                    if(potentialBodyPart.entity != entity)
+                    if(potentialBodyPart.entity.teamID != entity.teamID) //friendly fire check
                     {
                         if (potentialBodyPart is IDamageable<int>)
                         {
@@ -79,7 +91,7 @@ public class BodyPartMouth : BodyPart
                     if (potentialConsumable!= null)
                     {
                         (potentialConsumable as IDamageable<int>).TakeDamage(damage);
-                        (entity as Fishie).actions.Consume(potentialConsumable);
+                        if(potentialConsumable.type == typeOfEatibleFood)    (entity as Fishie).actions.Consume(potentialConsumable);
                     }
                 }
 

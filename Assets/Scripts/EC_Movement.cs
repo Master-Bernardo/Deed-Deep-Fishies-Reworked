@@ -30,11 +30,12 @@ public class EC_Movement : GameEntityComponent
     //optimising transform call can be expensive on large scale
     Transform myTransform;
 
+    //old values 15.06  08:21     p=2, i=50, d = 0.32
 
     //for PID Controller
-    float pGain = 2f;
-    float iGain = 50f;
-    float dGain = 0.32f;
+    float pGain = 1f;
+    float iGain = 1f;
+    float dGain = 0.4f;
     float lastPError = 0;
 
     /* https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops

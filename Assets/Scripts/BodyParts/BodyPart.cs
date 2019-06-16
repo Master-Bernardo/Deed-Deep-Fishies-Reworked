@@ -9,6 +9,7 @@ public class BodyPart : MonoBehaviour
 
     public GameEntity entity;
 
+    //TODO refactor bodyparts inheritance - the whole vital shit and the interface implementation
 
 }
 

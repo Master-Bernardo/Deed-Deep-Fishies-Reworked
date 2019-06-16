@@ -6,6 +6,8 @@ using UnityEngine;
 public class BodyPartTail : BodyPart, IDamageable<int>
 {
     public HC_Health health;
+    [Tooltip("this bodypart drops this when it gets destroyed")]
+    public GameObject drop;
 
     public void TakeDamage(int damage)
     {
@@ -13,7 +15,10 @@ public class BodyPartTail : BodyPart, IDamageable<int>
         if (!health.alive)
         {
             if (vital) entity.Destroy();
-            else Destroy(gameObject);
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -23,5 +28,11 @@ public class BodyPartTail : BodyPart, IDamageable<int>
         {
             TakeDamage(5);
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject drop1 = Instantiate(drop);
+        drop1.transform.position = transform.position;
     }
 }
